@@ -20,7 +20,7 @@ from dimensions import ptpin
 API_BASE = os.getenv('API_BASE_URL', 'http://fieldpapers.org/')
 
 
-def render_index(paper_size, orientation, layout, atlas_id, bounds, envelope, zoom, provider, cols, rows):
+def render_index(paper_size, orientation, layout, atlas_id, bounds, envelope, zoom, provider, cols, rows, text):
     page_number = "i"
 
     # hm2pt_ratio = homogeneous point coordinate conversation ratio
@@ -69,7 +69,7 @@ def render_index(paper_size, orientation, layout, atlas_id, bounds, envelope, zo
     try:
         (print_context, finish_drawing) = get_drawing_context(print_filename, page_width_pt, page_height_pt)
 
-        add_print_page(print_context, page_mmap, page_href, map_bounds_pt, points_FG, hm2pt_ratio, layout, "", None, None, pages)
+        add_print_page(print_context, page_mmap, page_href, map_bounds_pt, points_FG, hm2pt_ratio, layout, text, None, None, pages)
 
         finish_drawing()
 
@@ -119,6 +119,8 @@ if __name__ == '__main__':
     parser.add_option('-r', '--rows', dest='rows',
                       help='Number of rows.',
                       type='int')
+    parser.add_option('-t', '--text', dest='text', default='',
+                      help='Body text.')
 
     (opts, args) = parser.parse_args()
     if len(args) != 1:
@@ -128,7 +130,7 @@ if __name__ == '__main__':
     client = Client()
 
     try:
-        print render_index(opts.paper_size, opts.orientation, opts.layout, args[0], opts.bounds, opts.envelope, opts.zoom, opts.provider, opts.cols, opts.rows)
+        print render_index(opts.paper_size, opts.orientation, opts.layout, args[0], opts.bounds, opts.envelope, opts.zoom, opts.provider, opts.cols, opts.rows, opts.text)
     except Exception, e:
         client.captureException()
         raise
