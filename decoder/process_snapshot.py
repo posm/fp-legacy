@@ -58,6 +58,8 @@ def process_snapshot(input_file):
 
         return geotiff_bytes
 
+    raise Exception('could not process source image')
+
 
 def generate_filenames():
     (handle, highpass_filename) = mkstemp(prefix='highpass-', suffix='.jpg')
