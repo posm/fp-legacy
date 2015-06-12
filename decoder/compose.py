@@ -50,7 +50,7 @@ def get_mmap_image(mmap):
 
     try:
         close(handle)
-        mmap.draw(fatbits_ok=False, verbose=True).save(filename)
+        mmap.draw(fatbits_ok=False).save(filename)
 
         img = ImageSurface.create_from_png(filename)
 
