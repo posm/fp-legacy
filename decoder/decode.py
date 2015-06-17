@@ -244,7 +244,6 @@ def _blob_matches_secondary(blobs, aed_match):
 def read_code(image):
     """
     """
-    jit = lambda: .2 * (random() - .5)
     decode = 'zbarimg', '--raw', '-q', ':-'
     decode = Popen(decode, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
