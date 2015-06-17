@@ -31,13 +31,19 @@ def process_snapshot(input_file):
 
     input = Image.open(StringIO(input_file.read()))
     input.load()
+
     blobs = imgblobs(input, highpass_filename, preblobs_filename, postblob_filename)
+    highpass = Image.open(highpass_filename)
+    highpass.load()
 
     unlink(highpass_filename)
     unlink(preblobs_filename)
     unlink(postblob_filename)
 
-    (_, _, north, west, south, east, _paper, _orientation, _) = read_code(input)
+    # read the QR code from the highpass filtered input, mainly because the
+    # dimensions are more appropriate (extremely high resolution scans result
+    # in insufficiently solid QR codes due to ink / paper textures)
+    (_, _, north, west, south, east, _paper, _orientation, _) = read_code(highpass)
 
     for (s2p, paper, orientation, blobs_abcde) in paper_matches(blobs):
         print >> sys.stderr, paper, orientation, '--', s2p
