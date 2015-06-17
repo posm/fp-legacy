@@ -37,14 +37,10 @@ def process_snapshot(input_file):
     unlink(preblobs_filename)
     unlink(postblob_filename)
 
+    (_, print_url, north, west, south, east, _paper, _orientation, _layout) = read_code(input)
+
     for (s2p, paper, orientation, blobs_abcde) in paper_matches(blobs):
         print >> sys.stderr, paper, orientation, '--', s2p
-
-        try:
-            (_, print_url, north, west, south, east, _paper, _orientation, _layout) = read_code(input)
-        except CodeReadException:
-            print >> sys.stderr, 'could not read the QR code.'
-            continue
 
         if (_paper, _orientation) != (paper, orientation):
             continue
