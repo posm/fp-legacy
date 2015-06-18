@@ -244,8 +244,8 @@ def _blob_matches_secondary(blobs, aed_match):
 def read_code(image):
     """
     """
-    decode = 'zbarimg', '--raw', '-q', ':-'
-    decode = Popen(decode, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    decode = 'read_qr_code'
+    decode = Popen('read_qr_code', stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
     image.save(decode.stdin, 'PNG')
     decode.stdin.close()

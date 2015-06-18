@@ -18,7 +18,7 @@ RUN \
 # System dependencies
 
 RUN \
-  apt-get install -y gdal-bin python-cairo python-gdal python-dev python-imaging python-numpy python-pip python-requests python-virtualenv php5-cli zbar-tools && \
+  apt-get install -y gdal-bin python-cairo python-gdal python-dev python-imaging python-numpy python-pip python-requests python-virtualenv php5-cli zbar-tools imagemagick && \
   apt-get clean
 
 # Application dependencies
