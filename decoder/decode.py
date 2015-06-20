@@ -247,7 +247,7 @@ def read_code(image):
     decode = 'read_qr_code'
     decode = Popen('read_qr_code', stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
-    image.save(decode.stdin, 'PNG')
+    decode.stdin.write(image)
     decode.stdin.close()
     decode.wait()
 

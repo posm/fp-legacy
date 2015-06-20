@@ -29,16 +29,16 @@ def process_snapshot(input_file):
     """
     (highpass_filename, preblobs_filename, postblob_filename) = generate_filenames()
 
-    input = Image.open(StringIO(input_file.read()))
-    input.load()
+    input = input_file.read()
+    image = Image.open(StringIO(input))
+    image.load()
 
-    blobs = imgblobs(input, highpass_filename, preblobs_filename, postblob_filename)
+    (_, _, north, west, south, east, _paper, _orientation, _) = read_code(input)
+    blobs = imgblobs(image, highpass_filename, preblobs_filename, postblob_filename)
 
     unlink(highpass_filename)
     unlink(preblobs_filename)
     unlink(postblob_filename)
-
-    (_, _, north, west, south, east, _paper, _orientation, _) = read_code(input)
 
     for (s2p, paper, orientation, blobs_abcde) in paper_matches(blobs):
         print >> sys.stderr, paper, orientation, '--', s2p
@@ -51,7 +51,7 @@ def process_snapshot(input_file):
         (paper_width_pt, paper_height_pt) = get_paper_size(paper, orientation)
         geo_args = (paper_width_pt, paper_height_pt, north, west, south, east)
 
-        (geotiff_bytes, _, _) = create_geotiff(input, s2p.inverse(), *geo_args)
+        (geotiff_bytes, _, _) = create_geotiff(image, s2p.inverse(), *geo_args)
 
         return geotiff_bytes
 
