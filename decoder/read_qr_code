@@ -1,3 +1,11 @@
 #!/bin/sh
 
-convert :- -blur 0x2 png:- | zbarimg --raw -q :-
+set -e
+
+TMPFILE=$(mktemp -t qr-XXXXXX)
+
+trap "rm -f ${TMPFILE}" EXIT
+
+cat - > $TMPFILE
+
+zbarimg --raw -q $TMPFILE || (convert $TMPFILE -blur 0x2 png:- | zbarimg --raw -q :-)
