@@ -37,12 +37,12 @@ def render_page(paper_size, orientation, layout, atlas_id, page_number, bounds, 
     map_ymax_pt = page_height_pt - .5 * ptpin # bottom: 1/2 inch
 
     map_bounds_pt = (map_xmin_pt, map_ymin_pt, map_xmax_pt, map_ymax_pt)
+    (north, west, south, east) = bounds
 
-    page_href = "%satlases/%s/%s" % (API_BASE, atlas_id, page_number)
+    page_href = "%satlases/%s/%s?bbox=%f,%f,%f,%f" % (API_BASE, atlas_id, page_number, west, south, east, north)
 
     print >> sys.stderr, "page_href: %s" % (page_href)
 
-    (north, west, south, east) = bounds
     page_mmap = mapByExtentZoom(TemplatedMercatorProvider(provider), Location(north, west), Location(south, east), zoom)
 
     (handle, print_filename) = mkstemp(suffix='.pdf')
