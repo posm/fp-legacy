@@ -2,13 +2,14 @@
 
 from math import pi
 from copy import copy
-from urllib import urlopen, urlencode, quote_plus
+from urllib import urlencode
 from os.path import join as pathjoin, dirname, realpath
 from urlparse import urljoin, urlparse, parse_qs
 from os import close, write, unlink
 from optparse import OptionParser
 from StringIO import StringIO
 from tempfile import mkstemp
+import subprocess
 import sys
 
 from ModestMaps import mapByExtent, mapByExtentZoom
@@ -28,20 +29,9 @@ cached_fonts = dict()
 def get_qrcode_image(print_href):
     """ Render a QR code to an ImageSurface.
     """
-    (handle, filename) = mkstemp(suffix='.png')
+    qr_code = StringIO(subprocess.Popen("qrencode -m 0 -s 19 -o - %s" % (print_href), shell=True, stdout=subprocess.PIPE).stdout.read())
 
-    try:
-        # Field Papers' code.php won't generate arbitrary QR codes (good,
-        # except for now ;-)
-        write(handle, urlopen("https://api.qrserver.com/v1/create-qr-code/?size=528x528&data=%s" % (quote_plus(print_href))).read())
-        close(handle)
-
-        img = ImageSurface.create_from_png(filename)
-
-    finally:
-        unlink(filename)
-
-    return img
+    return ImageSurface.create_from_png(qr_code)
 
 def get_mmap_image(mmap):
     """ Render a Map to an ImageSurface.

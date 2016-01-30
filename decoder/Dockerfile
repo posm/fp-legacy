@@ -24,7 +24,7 @@ RUN \
 # Application dependencies
 
 RUN \
-  apt-get install -y python-cairo python-gdal python-imaging python-numpy && \
+  apt-get install -y python-cairo python-gdal python-imaging python-numpy qrencode && \
   apt-get clean
 
 ENV VIRTUAL_ENV /opt/paper/env
