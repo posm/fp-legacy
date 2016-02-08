@@ -365,7 +365,7 @@ def add_print_page(ctx, mmap, href, well_bounds_pt, points_FG, hm2pt_ratio, layo
         ctx.set_font_face(font)
         ctx.set_font_size(12)
 
-        line = href
+        line = href.split("?")[0]
         text_width = ctx.text_extents(line)[2]
 
         ctx.move_to(well_width_pt - text_width, -6)
