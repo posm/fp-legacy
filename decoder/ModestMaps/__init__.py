@@ -274,7 +274,7 @@ class TileRequest:
                 
                 elif scheme in ('http', 'https'):
                     conn = httplib.HTTPConnection(netloc)
-                    conn.request('GET', path + ('?' + query).rstrip('?'), headers={'User-Agent': 'Modest Maps python branch (http://modestmaps.com)'})
+                    conn.request('GET', path + ('?' + query).rstrip('?'), headers={'User-Agent': 'Field Papers (http://fieldpapers.org/)'})
                     response = conn.getresponse()
                     status = str(response.status)
                     
