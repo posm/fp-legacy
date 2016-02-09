@@ -1,4 +1,3 @@
 requests
-git+https://github.com/stamen/modestmaps-py
 raven
 git+https://github.com/migurski/Blobdetector
