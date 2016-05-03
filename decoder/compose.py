@@ -199,7 +199,7 @@ def add_scale_bar(ctx, mmap, map_height_pt):
 
     ctx.restore()
 
-def add_print_page(ctx, mmap, href, well_bounds_pt, points_FG, hm2pt_ratio, layout, text, mark, fuzzy, indexees):
+def add_print_page(ctx, mmap, href, well_bounds_pt, points_FG, hm2pt_ratio, layout, text, mark, fuzzy, indexees, title):
     """
     """
     print >> sys.stderr, 'Adding print page:', href
@@ -370,6 +370,11 @@ def add_print_page(ctx, mmap, href, well_bounds_pt, points_FG, hm2pt_ratio, layo
 
         ctx.move_to(well_width_pt - text_width, -6)
         ctx.show_text(line)
+
+        title_width = ctx.text_extents(title)[2]
+
+        ctx.move_to(well_width_pt - title_width, -24)
+        ctx.show_text(title)
 
         add_scale_bar(ctx, mmap, map_height_pt)
 

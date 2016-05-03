@@ -20,7 +20,7 @@ from dimensions import ptpin
 API_BASE = os.getenv('API_BASE_URL', 'http://fieldpapers.org/')
 
 
-def render_page(paper_size, orientation, layout, atlas_id, page_number, bounds, zoom, provider, text):
+def render_page(paper_size, orientation, layout, atlas_id, page_number, bounds, zoom, provider, text, title):
     # hm2pt_ratio = homogeneous point coordinate conversation ratio
     (page_width_pt, page_height_pt, points_FG, hm2pt_ratio) = paper_info(paper_size, orientation)
 
@@ -51,7 +51,7 @@ def render_page(paper_size, orientation, layout, atlas_id, page_number, bounds, 
     try:
         (print_context, finish_drawing) = get_drawing_context(print_filename, page_width_pt, page_height_pt)
 
-        add_print_page(print_context, page_mmap, page_href, map_bounds_pt, points_FG, hm2pt_ratio, layout, text, None, None, [])
+        add_print_page(print_context, page_mmap, page_href, map_bounds_pt, points_FG, hm2pt_ratio, layout, text, None, None, [], title)
 
         finish_drawing()
 
@@ -97,6 +97,8 @@ if __name__ == '__main__':
                       help='Page number.')
     parser.add_option('-t', '--text', dest='text', default='',
                       help='Page text.')
+    parser.add_option('-T', '--title', dest='title', default='',
+                      help='Title.')
 
     (opts, args) = parser.parse_args()
     if len(args) != 1:
@@ -106,7 +108,7 @@ if __name__ == '__main__':
     client = Client()
 
     try:
-        render_page(opts.paper_size, opts.orientation, opts.layout, args[0], opts.page_number, opts.bounds, opts.zoom, opts.provider, opts.text)
+        render_page(opts.paper_size, opts.orientation, opts.layout, args[0], opts.page_number, opts.bounds, opts.zoom, opts.provider, opts.text, opts.title)
     except Exception, e:
         client.captureException()
         raise
