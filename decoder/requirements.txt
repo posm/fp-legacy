@@ -1,3 +1,7 @@
+pycairo
+gdal
+pillow
+numpy
 requests
 raven
 git+https://github.com/migurski/Blobdetector
