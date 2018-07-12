@@ -148,7 +148,7 @@ class FakeContext:
         """
         """
         dim = surf.get_width(), surf.get_height()
-        img = Image.fromstring('RGBA', dim, surf.get_data())
+        img = Image.frombytes('RGBA', dim, surf.get_data())
         
         # weird channel order
         blue, green, red, alpha = img.split()
