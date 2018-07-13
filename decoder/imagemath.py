@@ -249,9 +249,9 @@ def extract_image(scan2print, print_bbox, scan_img, dest_dim, step=50):
 def arr2img(ar):
     """ Convert Numeric array to PIL Image.
     """
-    return Image.fromstring('L', (ar.shape[1], ar.shape[0]), ar.astype(ubyte).tostring())
+    return Image.frombytes('L', (ar.shape[1], ar.shape[0]), ar.astype(ubyte).tobytes())
 
 def img2arr(im):
     """ Convert PIL Image to Numeric array.
     """
-    return fromstring(im.tostring(), ubyte).reshape((im.size[1], im.size[0]))
+    return fromstring(im.tobytes(), ubyte).reshape((im.size[1], im.size[0]))

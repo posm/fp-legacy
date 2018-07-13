@@ -4,4 +4,4 @@ pillow
 numpy
 requests
 raven
-git+https://github.com/migurski/Blobdetector
+git+https://github.com/posm/Blobdetector

@@ -163,7 +163,7 @@ def create_geotiff(image, p2s, paper_width_pt, paper_height_pt, north, west, sou
             raise Exception(warp2.returncode)
         
         geojpeg_img = Image.open(tif2_filename)
-        geojpeg_img.save(jpg_filename)
+        geojpeg_img.convert("RGB").save(jpg_filename)
         
     except Exception, e:
         raise
